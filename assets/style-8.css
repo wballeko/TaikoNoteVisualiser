@@ -1,0 +1,90 @@
+:root {
+    --note-color-don: #eb4627;
+    --note-color-katsu: #408ead;
+
+    --note-size: 25px;
+    --note-transform: scale(2.4);
+    --note-finisher-transform: scale(4.2);
+}
+
+body {
+    background: #313338;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    margin-top: 100px;
+    width: auto;
+    height: calc(var(--note-size) * 3);
+    overflow: hidden;
+    padding: 50px 10px 10px 10px;
+}
+
+.don {
+    border-radius: 100%;
+    background: var(--note-color-don);
+    width: var(--note-size);
+    height: var(--note-size);
+    border: #000 0.5px solid;
+    display: block;
+    float: left;
+    transform: var(--note-transform);
+    opacity: 0.9;
+}
+
+.katsu {
+    border-radius: 100%;
+    background: var(--note-color-katsu);
+    width: var(--note-size);
+    height: var(--note-size);
+    border: #000 0.5px solid;
+    display: block;
+    float: left;
+    transform: var(--note-transform);
+    opacity: 0.9;
+}
+
+.don-finisher {
+    border-radius: 100%;
+    background: var(--note-color-don);
+    width: var(--note-size);
+    height: var(--note-size);
+    border: #000 0.5px solid;
+    display: block;
+    float: left;
+    transform: var(--note-finisher-transform);
+    opacity: 0.9;
+}
+
+.katsu-finisher {
+    border-radius: 100%;
+    background: var(--note-color-katsu);
+    width: var(--note-size);
+    height: var(--note-size);
+    border: #000 0.5px solid;
+    display: block;
+    float: left;
+    transform: var(--note-finisher-transform);
+    opacity: 0.9;
+}
+
+.rest {
+    border-radius: 100%;
+    background: #ffffff;
+    width: var(--note-size);
+    height: var(--note-size);
+    display: block;
+    float: left;
+    opacity: 0.0;
+}
