@@ -23,6 +23,23 @@ h1 {
     padding: 0;
 }
 
+.explanation {
+    margin: auto;
+    width: 20%;
+}
+
+input {
+    padding: 12px 12px;
+}
+
+input[type=text] {
+    width: 50%;
+}
+
+select {
+    padding: 12px 2px;
+}
+
 .wrapper {
     margin-top: 100px;
     width: auto;

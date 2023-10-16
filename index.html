@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Taiko Note Visualiser</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wballeko.github.io/TaikoNoteVisualiser/index.html">
+    <meta property="og:title" content="Taiko Note Visualiser Tool">
+    <meta property="og:description" content="Share sequences of notes with eachother.">
+    <meta property="og:image" content="https://i.imgur.com/X9xhahj.png">
 
     <link id="stylesheet" type="text/css" rel="stylesheet" href="assets/style.css">
     <script src="assets/app.js" defer></script>
@@ -25,7 +31,40 @@
         </select>
         <input type="submit" value="Show">
     </form>
+    <div class="explanation">
+        <table>
+            <thead>
+            <tr>
+                <th>Note</th>
+                <th>Symbol</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Don</td>
+                <td>d</td>
+            </tr>
+            <tr>
+                <td>Katsu</td>
+                <td>k</td>
+            </tr>
+            <tr>
+                <td>Don Finsher</td>
+                <td>D</td>
+            </tr>
+            <tr>
+                <td>Katsu Finsher</td>
+                <td>K</td>
+            </tr>
+            <tr>
+                <td>Rest</td>
+                <td>+</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
     <div class="wrapper" id="visualiser">
+        <div class="rest"></div>
     </div>
 </body>
 </html>

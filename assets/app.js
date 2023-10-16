@@ -11,8 +11,8 @@ if (rawArguments.toString() !== ''){
         arguments[argument[0]] = argument[1];
     }
 } else {
-    arguments['sequence'] = 'ddk';
-    arguments['spacing'] = 4;
+    arguments['sequence'] = 'k+k+d+d+kk+dd+kk+kk+dd+kk';
+    arguments['spacing'] = 8;
 }
 
 // Fill input with arguments
