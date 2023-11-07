@@ -53,7 +53,21 @@ function renderNotes()
     notes.forEach((note, index) => {
         const noteElement = document.createElement("div");
         noteElement.classList.add("note");
-        noteElement.classList.add(`note-${note.note}`);
+        noteElement.classList.add(`s${note.duration}`);
+
+        switch (note.note) {
+            case "k":
+                noteElement.classList.add("katsu");
+                break;
+            case "d":
+                noteElement.classList.add("don");
+                break;
+            case "r":
+                noteElement.classList.add("rest");
+                break;
+        
+        }
+
         noteElement.style.gridColumn = index + 1;
         noteElement.style.gridRow = 1;
         noteElement.style.gridRowEnd = `span ${note.duration}`;
