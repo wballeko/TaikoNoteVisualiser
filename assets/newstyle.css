@@ -1,11 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Open+Sans:wght@400;500;600;700&display=swap');
 
 :root {
+    --column-width: 16px;
+
     --note-color-don: #eb4627;
     --note-color-katsu: #408ead;
 
     --note-size: 75px;
     --note-size-finisher: 110px;
+}
+
+input[type='number'] {
+    width: 50px;
 }
 
 body {
@@ -54,7 +60,7 @@ body {
     background-color: #707070;
     display: grid;
     height: 130px;
-    grid-template-columns: repeat(200, 30px);
+    grid-template-columns: repeat(200, var(--column-width));
 }
 
 #sequence-grid div {
@@ -74,14 +80,55 @@ body {
     grid-column: span 4;
 }
 
+.s5 {
+    grid-column: span 5;
+}
+
 .s6 {
     grid-column: span 6;
+}
+
+.s7 {
+    grid-column: span 7;
 }
 
 .s8 {
     grid-column: span 8;
 }
 
+.s9 {
+    grid-column: span 9;
+}
+
+.s10 {
+    grid-column: span 10;
+}
+
+.s11 {
+    grid-column: span 11;
+}
+
+.s12 {
+    grid-column: span 12;
+}
+
+.s13 {
+    grid-column: span 13;
+}
+
+.s14 {
+    grid-column: span 14;
+}
+
+.s15 {
+    grid-column: span 15;
+}
+
 .s16 {
     grid-column: span 16;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }

@@ -1,9 +1,50 @@
+const DEFAULT_SV = 1.4;
+const DEFAULT_COLUMN_WIDTH_IN_PIXELS = 16;
+
 const state = {
     sequence: "kkdd[kk]r[dd]r[kk]r[kk]r[dd]r[kk]",
     spacing: 4,
+    sv: 1.4,
 };
 
 const notes = [];
+
+function getParameters()
+{
+    // get the parameters from the url
+    const urlParams = new URLSearchParams(window.location.search);
+    const sequence = urlParams.get("sequence");
+    const sv = urlParams.get("sv");
+
+    // if the parameters are not null then set the state
+    if (sequence !== null) {
+        state.sequence = sequence;
+    }
+
+    if (sv !== null) {
+        state.sv = sv;
+    }
+
+    if (sv < 0) {
+        state.sv = 0;
+    }
+}
+
+function setParameters()
+{
+    // set the parameters in the input boxes
+    const sequenceInput = document.querySelector("#sequence");
+    sequenceInput.value = state.sequence;
+
+    const svInput = document.querySelector("#sv");
+    svInput.value = state.sv;
+}
+
+function applySV()
+{
+    const cssColumnWidth = state.sv * DEFAULT_COLUMN_WIDTH_IN_PIXELS / DEFAULT_SV;
+    document.documentElement.style.setProperty('--column-width', `${cssColumnWidth}px`);
+}
 
 function convertSequenceToNotes()
 {
@@ -28,9 +69,11 @@ function convertSequenceToNotes()
                 break;
             case "(":
                 state.spacing = state.spacing * 1.5;
+                Math.round(state.spacing, 1);
                 break;
             case ")":
                 state.spacing = state.spacing / 1.5;
+                Math.round(state.spacing, 1);
                 break;
             default:
                 notes.push({
@@ -40,20 +83,20 @@ function convertSequenceToNotes()
                 break;
         }
     });
-
-    console.log(notes);
 }
-
-convertSequenceToNotes();
 
 function renderNotes()
 {
     const noteGrid = document.querySelector("#sequence-grid");
 
+    let zIndex = notes.length + 1;
+
     notes.forEach((note, index) => {
         const noteElement = document.createElement("div");
         noteElement.classList.add("note");
         noteElement.classList.add(`s${note.duration}`);
+        noteElement.style.zIndex = zIndex;
+        zIndex--;
 
         switch (note.note) {
             case "k":
@@ -62,17 +105,33 @@ function renderNotes()
             case "d":
                 noteElement.classList.add("don");
                 break;
+            case "K":
+                noteElement.classList.add("katsu","finisher");
+                break;
+            case "D":
+                noteElement.classList.add("don","finisher");
+                break;
+            case " ":
+                noteElement.classList.add("rest");
+                break;
             case "r":
                 noteElement.classList.add("rest");
                 break;
+            default:
+                return;
         
         }
-
-        noteElement.style.gridColumn = index + 1;
-        noteElement.style.gridRow = 1;
-        noteElement.style.gridRowEnd = `span ${note.duration}`;
         noteGrid.appendChild(noteElement);
     });
 }
 
-renderNotes();
+function main()
+{
+    getParameters();
+    setParameters();
+    applySV();
+    convertSequenceToNotes();
+    renderNotes();
+}
+
+main();
