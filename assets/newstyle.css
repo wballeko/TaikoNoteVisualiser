@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Open+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    --note-color-don: #eb4627;
+    --note-color-katsu: #408ead;
+
+    --note-size: 75px;
+    --note-size-finisher: 110px;
+}
+
+body {
+    background-color: #3a3a3a;
+    font-family: 'Noto Color Emoji', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+}
+
+.note {
+    height: var(--note-size);
+    width: var(--note-size);
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 100%;
+    box-shadow: inset 0px 0px 0px 1px #000;
+    border: solid 1px #000;
+    z-index: 1;
+}
+
+.note.finisher {
+    height: var(--note-size-finisher);
+    width: var(--note-size-finisher);
+}
+
+.rest {
+    height: 1px;
+    width: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.don {
+    background-color: var(--note-color-don);
+}
+
+.katsu {
+    background-color: var(--note-color-katsu);
+}
+
+#sequence-wrapper {
+    margin-top: 20px;
+}
+
+#sequence-grid {
+    isolation: isolate;
+    background-color: #707070;
+    display: grid;
+    height: 130px;
+    grid-template-columns: repeat(200, 30px);
+}
+
+#sequence-grid div {
+    z-index: 1;
+}
+
+
+.s2 {
+    grid-column: span 2;
+}
+
+.s3 {
+    grid-column: span 3;
+}
+
+.s4 {
+    grid-column: span 4;
+}
+
+.s6 {
+    grid-column: span 6;
+}
+
+.s8 {
+    grid-column: span 8;
+}
+
+.s16 {
+    grid-column: span 16;
+}

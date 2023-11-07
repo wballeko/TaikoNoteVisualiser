@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="stylesheet" type="text/css" rel="stylesheet" href="assets/newstyle.css">
+    <script src="assets/newapp.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Taiko Sequence Visualiser</h1>
+    <form action="/new" method="get">
+        <label for="sequence">Sequence</label>
+        <input type="text" name="sequence" id="sequence">
+        <label for="spacing">Spacing</label>
+        <select name="spacing" id="spacing">
+            <option value="2">1/2</option>
+            <option value="4" selected>1/4</option>
+            <option value="8">1/8</option>
+        </select>
+        <label for="playstyle">Playstyle</label>
+        <select name="playstyle" id="playstyle">
+            <option value="full-alt" selected>Full-alt</option>
+            <option value="single-tap">Single-tap</option>
+        </select>
+    </form>
+    <div id="sequence-wrapper">
+        <div id="sequence-grid">
+            <div class="note katsu"></div>
+            <div class="note katsu"></div>
+            <div class="note don s2"></div>
+            <div class="note don"></div>
+            <div class="rest"></div>
+            <div class="note katsu finisher"></div>
+            <div class="note katsu finisher"></div>
+            <div class="note katsu finisher"></div>
+        </div>
+    </div>
+</body>
+</html>
