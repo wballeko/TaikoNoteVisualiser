@@ -1,59 +1,137 @@
-const rawArguments = window.location.search.replace('?','').split('&');
+const DEFAULT_SV = 1.4;
+const DEFAULT_COLUMN_WIDTH_IN_PIXELS = 16;
 
-// Arguments to object
-arguments = {};
+const state = {
+    sequence: "kkdd[kk]r[dd]r[kk]r[kk]r[dd]r[kk]",
+    spacing: 4,
+    sv: 1.4,
+};
 
-if (rawArguments.toString() !== ''){
-    for (let i = 0; i < rawArguments.length; i++) {
-        let argument = rawArguments[i].split('=');
-        // Decode URI component to allow for multiple spaces
-        argument[1] = decodeURIComponent(argument[1]);
-        arguments[argument[0]] = argument[1];
+const notes = [];
+
+function getParameters()
+{
+    // get the parameters from the url
+    const urlParams = new URLSearchParams(window.location.search);
+    const sequence = urlParams.get("sequence");
+    const sv = urlParams.get("sv");
+
+    // if the parameters are not null then set the state
+    if (sequence !== null) {
+        state.sequence = sequence;
     }
-} else {
-    arguments['sequence'] = 'k+k+d+d+kk+dd+kk+kk+dd+kk';
-    arguments['spacing'] = 8;
-}
 
-// Fill input with arguments
-document.querySelector('#sequence').value = arguments['sequence'];
-document.querySelector('#spacing').value = arguments['spacing'];
+    if (sv !== null) {
+        state.sv = sv;
+    }
 
-function appendCharacterToVisualizer(character) {
-    const visualiser = document.querySelector('#visualiser');
-    const characterElement = document.createElement('div');
-    characterElement.classList.add(character);
-    visualiser.appendChild(characterElement);
-}
-
-// Foreach character in sequence, add to the page
-for (let i = 0; i < arguments['sequence'].length; i++) {
-    let character = arguments['sequence'][i];
-    switch(character) {
-        case 'd':
-            appendCharacterToVisualizer('don');
-            break;
-        case 'k':
-            appendCharacterToVisualizer('katsu');
-            break;
-        case 'D':
-            appendCharacterToVisualizer('don-finisher');
-            break;
-        case 'K':
-            appendCharacterToVisualizer('katsu-finisher');
-            break;
-        case '+':
-            appendCharacterToVisualizer('rest');
-            break;
-        default:
-            break;
+    if (sv < 0) {
+        state.sv = 0;
     }
 }
 
-// Change stylesheet based on spacing
-function changeStylesheetToSpacing(spacing) {
-    const stylesheet = document.querySelector('#stylesheet');
-    stylesheet.href = `assets/style-${spacing}.css`;
+function setParameters()
+{
+    // set the parameters in the input boxes
+    const sequenceInput = document.querySelector("#sequence");
+    sequenceInput.value = state.sequence;
+
+    const svInput = document.querySelector("#sv");
+    svInput.value = state.sv;
 }
 
-changeStylesheetToSpacing(arguments['spacing']);
+function applySV()
+{
+    const cssColumnWidth = state.sv * DEFAULT_COLUMN_WIDTH_IN_PIXELS / DEFAULT_SV;
+    document.documentElement.style.setProperty('--column-width', `${cssColumnWidth}px`);
+}
+
+function convertSequenceToNotes()
+{
+    // for each character in the sequence add a note to the notes object
+    // if a character is a [ then the next notes are half the length until a ] is found
+    // if a character is a { then the next notes are double the length until a } is found
+    // if a character is a ( then the next notes are 1.5 times the length until a ) is found
+
+    state.sequence.split("").forEach((character, index) => {
+        switch (character) {
+            case "[":
+                state.spacing = state.spacing / 2;
+                break;
+            case "]":
+                state.spacing = state.spacing * 2;
+                break;
+            case "{":
+                state.spacing = state.spacing * 2;
+                break;
+            case "}":
+                state.spacing = state.spacing / 2;
+                break;
+            case "(":
+                state.spacing = state.spacing * 1.5;
+                Math.round(state.spacing, 1);
+                break;
+            case ")":
+                state.spacing = state.spacing / 1.5;
+                Math.round(state.spacing, 1);
+                break;
+            default:
+                notes.push({
+                    note: character,
+                    duration: state.spacing,
+                });
+                break;
+        }
+    });
+}
+
+function renderNotes()
+{
+    const noteGrid = document.querySelector("#sequence-grid");
+
+    let zIndex = notes.length + 1;
+
+    notes.forEach((note, index) => {
+        const noteElement = document.createElement("div");
+        noteElement.classList.add("note");
+        noteElement.classList.add(`s${note.duration}`);
+        noteElement.style.zIndex = zIndex;
+        zIndex--;
+
+        switch (note.note) {
+            case "k":
+                noteElement.classList.add("katsu");
+                break;
+            case "d":
+                noteElement.classList.add("don");
+                break;
+            case "K":
+                noteElement.classList.add("katsu","finisher");
+                break;
+            case "D":
+                noteElement.classList.add("don","finisher");
+                break;
+            case " ":
+                noteElement.classList.add("rest");
+                break;
+            case "r":
+                noteElement.classList.add("rest");
+                break;
+            default:
+                return;
+        
+        }
+        noteGrid.appendChild(noteElement);
+    });
+}
+
+function main()
+{
+    getParameters();
+    setParameters();
+    applySV();
+    convertSequenceToNotes();
+    renderNotes();
+}
+
+main();
