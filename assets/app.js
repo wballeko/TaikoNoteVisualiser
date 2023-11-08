@@ -53,38 +53,40 @@ function convertSequenceToNotes()
     // if a character is a { then the next notes are double the length until a } is found
     // if a character is a ( then the next notes are 1.5 times the length until a ) is found
 
+    let spacing = state.spacing;
+
     state.sequence.split("").forEach((character, index) => {
         switch (character) {
             case "[":
-                state.spacing = state.spacing / 2;
+                spacing = spacing / 2;
                 break;
             case "]":
-                state.spacing = state.spacing * 2;
+                spacing = spacing * 2;
                 break;
             case "{":
-                state.spacing = state.spacing * 2;
+                spacing = spacing * 2;
                 break;
             case "}":
-                state.spacing = state.spacing / 2;
+                spacing = spacing / 2;
                 break;
             case "(":
-                state.spacing = state.spacing * 1.5;
-                Math.round(state.spacing, 1);
+                spacing = spacing * 1.5;
+                Math.round(spacing, 1);
                 break;
             case ")":
-                state.spacing = state.spacing / 1.5;
-                Math.round(state.spacing, 1);
+                spacing = spacing / 1.5;
+                Math.round(spacing, 1);
                 break;
             case "<":
-                state.spacing++;
+                spacing++;
                 break;
             case ">":
-                state.spacing--;
+                spacing--;
                 break;
             default:
                 notes.push({
                     note: character,
-                    duration: state.spacing,
+                    duration: spacing,
                 });
                 break;
         }

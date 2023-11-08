@@ -21,6 +21,10 @@ body {
     color: white;
 }
 
+footer {
+    font-size: 0.8em;
+}
+
 a {
     color: rgb(181, 221, 255);
     text-decoration: none;
