@@ -75,6 +75,12 @@ function convertSequenceToNotes()
                 state.spacing = state.spacing / 1.5;
                 Math.round(state.spacing, 1);
                 break;
+            case "<":
+                state.spacing++;
+                break;
+            case ">":
+                state.spacing--;
+                break;
             default:
                 notes.push({
                     note: character,
@@ -88,6 +94,7 @@ function convertSequenceToNotes()
 function renderNotes()
 {
     const noteGrid = document.querySelector("#sequence-grid");
+    noteGrid.innerHTML = "";
 
     let zIndex = notes.length + 1;
 
@@ -125,6 +132,23 @@ function renderNotes()
     });
 }
 
+function applyListeners()
+{
+    const sequenceInput = document.querySelector("#sequence");
+    sequenceInput.addEventListener("input", (event) => {
+        state.sequence = event.target.value;
+        notes.length = 0;
+        convertSequenceToNotes();
+        renderNotes();
+    });
+
+    const svInput = document.querySelector("#sv");
+    svInput.addEventListener("input", (event) => {
+        state.sv = event.target.value;
+        applySV();
+    });
+}
+
 function main()
 {
     getParameters();
@@ -132,6 +156,7 @@ function main()
     applySV();
     convertSequenceToNotes();
     renderNotes();
+    applyListeners();
 }
 
 main();
