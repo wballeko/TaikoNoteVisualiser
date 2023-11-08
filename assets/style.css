@@ -8,6 +8,9 @@
 
     --note-size: 75px;
     --note-size-finisher: 110px;
+
+    --page-background-color: #3a3a3a;
+    --sequence-background-color: #707070;
 }
 
 input[type='number'] {
@@ -15,7 +18,7 @@ input[type='number'] {
 }
 
 body {
-    background-color: #3a3a3a;
+    background-color: var(--page-background-color);
     font-family: 'Noto Color Emoji', sans-serif;
     font-family: 'Open Sans', sans-serif;
     color: white;
@@ -67,16 +70,11 @@ a {
 
 #sequence-grid {
     isolation: isolate;
-    background-color: #707070;
+    background-color: var(--sequence-background-color);
     display: grid;
     height: 130px;
     grid-template-columns: repeat(200, var(--column-width));
 }
-
-#sequence-grid div {
-    z-index: 1;
-}
-
 
 .s2 {
     grid-column: span 2;

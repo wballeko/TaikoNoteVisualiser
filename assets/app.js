@@ -11,12 +11,10 @@ const notes = [];
 
 function getParameters()
 {
-    // get the parameters from the url
     const urlParams = new URLSearchParams(window.location.search);
     const sequence = urlParams.get("sequence");
     const sv = urlParams.get("sv");
 
-    // if the parameters are not null then set the state
     if (sequence !== null) {
         state.sequence = sequence;
     }
@@ -32,7 +30,6 @@ function getParameters()
 
 function setParameters()
 {
-    // set the parameters in the input boxes
     const sequenceInput = document.querySelector("#sequence");
     sequenceInput.value = state.sequence;
 
@@ -46,16 +43,20 @@ function applySV()
     document.documentElement.style.setProperty('--column-width', `${cssColumnWidth}px`);
 }
 
+function applyBackgrounds()
+{
+    const pageBackgroundColor = document.querySelector("#page-background-color");
+    const sequenceBackgroundColor = document.querySelector("#sequence-background-color");
+
+    document.documentElement.style.setProperty('--page-background-color', pageBackgroundColor.value);
+    document.documentElement.style.setProperty('--sequence-background-color', sequenceBackgroundColor.value);
+}
+
 function convertSequenceToNotes()
 {
-    // for each character in the sequence add a note to the notes object
-    // if a character is a [ then the next notes are half the length until a ] is found
-    // if a character is a { then the next notes are double the length until a } is found
-    // if a character is a ( then the next notes are 1.5 times the length until a ) is found
-
     let spacing = state.spacing;
 
-    state.sequence.split("").forEach((character, index) => {
+    state.sequence.split("").forEach((character) => {
         switch (character) {
             case "[":
                 spacing = spacing / 2;
@@ -71,11 +72,9 @@ function convertSequenceToNotes()
                 break;
             case "(":
                 spacing = spacing * 1.5;
-                Math.round(spacing, 1);
                 break;
             case ")":
                 spacing = spacing / 1.5;
-                Math.round(spacing, 1);
                 break;
             case "<":
                 spacing++;
@@ -84,6 +83,9 @@ function convertSequenceToNotes()
                 spacing--;
                 break;
             default:
+                Math.round(spacing, 1);
+                if (spacing < 1) spacing = 1;
+                if (spacing > 16) spacing = 16;
                 notes.push({
                     note: character,
                     duration: spacing,
@@ -100,7 +102,7 @@ function renderNotes()
 
     let zIndex = notes.length + 1;
 
-    notes.forEach((note, index) => {
+    notes.forEach((note) => {
         const noteElement = document.createElement("div");
         noteElement.classList.add("note");
         noteElement.classList.add(`s${note.duration}`);
@@ -148,6 +150,16 @@ function applyListeners()
     svInput.addEventListener("input", (event) => {
         state.sv = event.target.value;
         applySV();
+    });
+
+    const pageBackgroundColor = document.querySelector("#page-background-color");
+    pageBackgroundColor.addEventListener("input", (event) => {
+        applyBackgrounds();
+    });
+
+    const sequenceBackgroundColor = document.querySelector("#sequence-background-color");
+    sequenceBackgroundColor.addEventListener("input", (event) => {
+        applyBackgrounds();
     });
 }
 
