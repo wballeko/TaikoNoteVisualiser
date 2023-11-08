@@ -21,6 +21,12 @@ body {
     color: white;
 }
 
+a {
+    color: rgb(181, 221, 255);
+    text-decoration: none;
+    font-weight: 500;
+}
+
 .note {
     height: var(--note-size);
     width: var(--note-size);
